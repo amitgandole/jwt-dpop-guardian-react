@@ -1,46 +1,144 @@
-# Getting Started with Create React App
+# DPoP Authentication System with React and Node.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project demonstrates the implementation of **DPoP (Demonstration of Proof-of-Possession)** authentication in a web application using **React** for the frontend and **Node.js** for the backend. The system secures resource access using OAuth 2.0 and DPoP for proof-of-possession verification.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies](#technologies)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Login Authentication**: Uses a simple username and password-based login with access tokens.
+- **DPoP Proof**: Implements DPoP (Demonstration of Proof-of-Possession) for secure resource access.
+- **Access Token Validation**: Verifies the validity of access tokens before allowing access to secure endpoints.
+- **Key Pair Generation**: Uses an Elliptic Curve key pair for generating and verifying DPoP proofs.
+- **CORS Enabled**: Supports cross-origin resource sharing for secure communication between Angular and Node.js apps.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Technologies
 
-### `npm test`
+### Frontend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React**: For creating the login form and handling requests.
+- **Axios**: For asynchronous API calls and interceptor
 
-### `npm run build`
+### Backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Node.js**: Handles API requests and user authentication.
+- **Express.js**: For building the backend API.
+- **JOSE (Javascript Object Signing and Encryption)**: For handling JWTs and DPoP proof verification.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    dpop-react-auth/
+    │
+    ├── react-client/                    # Frontend (React)
+    │   ├── src/
+    │   │   ├── components/              # React Components (Login, SecureData)
+    │   │   ├── hooks/                   # Custom hooks (useAuth, useDpop)
+    │   │   ├── services/                # API services
+    │   │   ├── utils/                   # common utility code
+    │   │   └── ...
+    │   └── ...
+    │
+    ├── dpop-node-server/                # Backend (Node.js)
+    │   ├── server.js                    # Main server file
+    │   └── ...
+    │
+    └── README.md                        # Project documentation
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Prerequisites
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Node.js](https://nodejs.org/) (v14+)
+- [React](https://react.dev/learn/installation) (v12+)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Steps
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1.  **Clone the repository**:
 
-## Learn More
+        git clone https://github.com/amitgandole/jwt-dpop-guardian-react.git
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2.  **Install dependencies**:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Navigate to the Angular client directory and install dependencies:
+
+        cd dpop-react-auth
+        npm install
+
+- Then navigate to the Node.js server directory and install dependencies:
+
+         cd ../dpop-node-server
+         npm install
+
+## Usage
+
+### 1. **Run the Backend (Node.js)**:
+
+From the \`dpop-node-server\` directory, start the Node.js server:
+
+    npm start
+
+The backend will start on \`http://localhost:3001\`.
+
+### 2. **Run the Frontend (Angular)**:
+
+Open another terminal, navigate to the \`angular-client\` directory, and run the Angular app:
+
+    npm start
+
+The Angular app will start on \`http://localhost:3000\`.
+
+### 3. **Test the Authentication**:
+
+- Open your browser and navigate to \`http://localhost:3000\`.
+- Enter the login credentials (username: \`test\`, password: \`password\`).
+- Upon successful login, the system will send an access token and generate a DPoP proof for secure data access.
+
+## API Endpoints
+
+### Backend (Node.js)
+
+- **POST** \`/login\`: Authenticates the user and returns an access token.
+
+  **Request**:
+
+      {
+        "username": "test",
+        "password": "password"
+      }
+
+  **Response**:
+
+      {
+        "accessToken": "dummy-access-token"
+      }
+
+- **GET** \`/secure-data\`: Retrieves secure data. Requires a valid access token and DPoP proof in headers.
+
+  **Headers**:
+
+      {
+        "Authorization": "Bearer <access_token>",
+        "DPoP": "<dpop_proof>",
+        "x-public-key": "<public_key>"
+      }
+
+## Key Concepts
+
+### DPoP Proof
+
+- **Demonstration of Proof-of-Possession (DPoP)** is a mechanism to bind a particular HTTP request to the possession of a private key. The client generates a unique DPoP proof for each request, and the server verifies it using the corresponding public key.
+
+### JWT (JSON Web Token)
+
+- JWT is used for securing API endpoints by verifying the user's identity through an access token.
+
+### Key Pair Generation
+
+- In this project, an elliptic curve (ES256) key pair is generated on the client-side. The public key is sent to the server for verification, and the private key is used to sign DPoP proofs.
