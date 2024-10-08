@@ -17,7 +17,7 @@ This project demonstrates the implementation of **DPoP (Demonstration of Proof-o
 - **DPoP Proof**: Implements DPoP (Demonstration of Proof-of-Possession) for secure resource access.
 - **Access Token Validation**: Verifies the validity of access tokens before allowing access to secure endpoints.
 - **Key Pair Generation**: Uses an Elliptic Curve key pair for generating and verifying DPoP proofs.
-- **CORS Enabled**: Supports cross-origin resource sharing for secure communication between Angular and Node.js apps.
+- **CORS Enabled**: Supports cross-origin resource sharing for secure communication between React and Node.js apps.
 
 ## Technologies
 
@@ -66,7 +66,7 @@ This project demonstrates the implementation of **DPoP (Demonstration of Proof-o
 
 2.  **Install dependencies**:
 
-- Navigate to the Angular client directory and install dependencies:
+- Navigate to the React client directory and install dependencies:
 
         cd dpop-react-auth
         npm install
@@ -86,13 +86,13 @@ From the \`dpop-node-server\` directory, start the Node.js server:
 
 The backend will start on \`http://localhost:3001\`.
 
-### 2. **Run the Frontend (Angular)**:
+### 2. **Run the Frontend (React)**:
 
-Open another terminal, navigate to the \`angular-client\` directory, and run the Angular app:
+Open another terminal, navigate to the \`react-client\` directory, and run the React app:
 
     npm start
 
-The Angular app will start on \`http://localhost:3000\`.
+The React app will start on \`http://localhost:3000\`.
 
 ### 3. **Test the Authentication**:
 
